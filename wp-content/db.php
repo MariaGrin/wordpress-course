@@ -1,0 +1,1 @@
+/Users/klim/PhpstormProjects/wordpress.local/wp-content/plugins/query-monitor/wp-content/db.php
