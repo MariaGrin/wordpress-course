@@ -23,6 +23,8 @@
 </head>
 
 <body <?php body_class(); ?>>
+
+
 <div id="page" class="site">
 	<a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', 'twentyseventeen' ); ?></a>
 
@@ -55,3 +57,4 @@
 
 	<div class="site-content-contain">
 		<div id="content" class="site-content">
+			<?php echo do_shortcode('[contact-form-7 id="24" title="Contact form 1"]') ?>
