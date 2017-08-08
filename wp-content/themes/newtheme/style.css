@@ -5,7 +5,7 @@ Description: краткое-описание-темы
 Author: ваше-имя
 Author URI: http://kps-dev.com
 Version: номер-версии--необязательное-поле
-.
-Развёрнутое описание темы/Лицензия-если-нужно.
-.
+Template: ionmag
 */
+
+@import url('../ionMag/style.css');
