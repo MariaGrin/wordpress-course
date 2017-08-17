@@ -221,10 +221,7 @@ function kps_show_dashboard_widget () {
 
     $user = wp_get_current_user();
     $values = get_user_meta($user->ID, 'wanted_post');
-
-    echo '<pre>';
-    var_export($values);
-    echo '</pre>';
+    
     $limit =  (int)get_option('kps_number_of_items') ? (int)get_option('kps_number_of_items') : 10;
 
     echo '<ul>';
