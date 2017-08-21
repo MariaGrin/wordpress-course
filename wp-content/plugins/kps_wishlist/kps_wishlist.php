@@ -5,8 +5,7 @@ Plugin URI: http://kultprosvet.net
 Description: Add a wish list widget where registered users can save the posts of the products they want to buy.
 Version: 1.0
 Author: Misha
-Author URI: http://kultprosvet.net
-License: GPL2
+Author URI: http://kuzmichm.nfshost.com/
 */
 /**
  * add fields to the admin page
