@@ -1,10 +1,10 @@
 <?php
 /*
-Plugin Name: KPS Wishlist plugin
+Plugin Name: KPS Wishlist plugin Kuzmich edit
 Plugin URI: http://kultprosvet.net
 Description: Add a wish list widget where registered users can save the posts of the products they want to buy.
 Version: 1.0
-Author: Klim
+Author: Misha
 Author URI: http://kultprosvet.net
 License: GPL2
 */
@@ -19,17 +19,20 @@ function kps_admin_init() {
 //add admin settings
 add_action('admin_menu', 'kps_plugin_menu' );
 function kps_plugin_menu() {
-    // add_options_page( title, menu_anchor, 'permission_name', slug, callback_function );
+	// add_options_page( title, menu_anchor, 'permission_name', slug, callback_function );
 	add_options_page('KPS Wishlist Options', 'KPS Wishlist', 'manage_options', 'kps', 'kps_plugin_options');
 }
 function kps_plugin_options () {
-    //Закрытие PHP для вывода HTML странная особенность Wordpress
+	//Закрытие PHP для вывода HTML странная особенность Wordpress
 	?>
 	<div class="wrap">
 		<h2>KPS Wishlist</h2>
 		<form action="options.php" method="post">
 			<?php settings_fields('kps-group'); ?>
-			<?php do_settings_fields('kps-group'); ?>
+			<?php //do_settings_fields('kps-group'); ?>
+			<?php 
+			add_settings_section( 'kps-group', 'Joinform configuration', null, 'section_options_page_type' );
+			?>
 
 			<table class="form-table">
 				<tr valign="top">
@@ -66,10 +69,10 @@ function kps_widget_wishlist_init () {
 class wishlist_Widget extends WP_Widget {
 	function wishlist_Widget() {
 		$widget_options = array(
-            'classname' => 'kps_class', //for CSS
-            'description' => 'Add items to wishlist'
-            );
-        //id for DOM element
+			'classname' => 'kps_class', //for CSS
+			'description' => 'Add items to wishlist'
+			);
+		//id for DOM element
 		$this->WP_Widget('kps_wishlist', 'Wishlist', $widget_options);
 	}
 	function form($instance) {
@@ -78,37 +81,38 @@ class wishlist_Widget extends WP_Widget {
 		$title = esc_attr($instance['title']);
 		echo '<p>Title <input class="widefat" name="'.$this->get_field_name('title').'" type="text" value="'.$title.'" /></p>';
 	}
-    /**
-     * save widget form
-     */
-    function update($new_instance, $old_instance) {
-        // process widget options to save
-    	$instance = $old_instance;
-    	$instance['title'] = strip_tags( $new_instance['title']);
-    	return $instance;
-    }
-    /**
-     * show widget
-     */
-    function widget($args, $instance) {
-    	extract($args);
-    	$title = apply_filters('widget_title', $instance['title']);
-    	if(is_single()){
-    		echo $before_widget;
-    		echo $before_title . $title . $after_title;
-    		if(!is_user_logged_in()) {
-    			echo 'Please sign in to use this wishlist';
-    		}else {
-    			global $post;
-    			if(is_already_wishlisted($post->ID)) {
-    				echo 'You want this!';
-    			}else {
-    				echo '<span id="kps_add_wishlist_div"><a id="kps_add_wishlist" href="">Add to wishlist</a></span>';
-    			}
-    		}
-    		echo $after_widget;
-    	}
-    }
+	/**
+	 * save widget form
+	 */
+	function update($new_instance, $old_instance) {
+		// process widget options to save
+		$instance = $old_instance;
+		$instance['title'] = strip_tags( $new_instance['title']);
+		return $instance;
+	}
+	/**
+	 * show widget
+	 */
+	function widget($args, $instance) {
+		extract($args);
+		$title = apply_filters('widget_title', $instance['title']);
+		if(is_single()){
+			echo $before_widget;
+			echo $before_title . $title . $after_title;
+			if(!is_user_logged_in()) {
+				echo 'Please sign in to use this wishlist';
+			}else {
+				global $post;
+				if(is_already_wishlisted($post->ID)) {
+					echo '<span id="kps_add_wishlist_div">In wishlist</span>';
+					echo '<div id="kps_remove_wishlist_div"><a id="kps_remove_wishlist" href="">remove it</a></div>';
+				}else {
+					echo '<span id="kps_add_wishlist_div"><a id="kps_add_wishlist" href="">Add to my wishlist</a></span><div id="kps_remove_wishlist_div"></div>';
+				}
+			}
+			echo $after_widget;
+		}
+	}
 }
 function is_already_wishlisted($post_id) {
 	$user = wp_get_current_user();
@@ -123,31 +127,51 @@ function is_already_wishlisted($post_id) {
 //load external files to add js files
 add_action( 'wp', 'kps_init' );
 function kps_init() {
-    //register plugin js file. Jquery is a requirement for this script so we specify it
+	//register plugin js file. Jquery is a requirement for this script so we specify it
 	wp_register_script('kpswishlist-js', plugins_url('/kpswishlist-js.js', __FILE__), array('jquery') );
-    //load scripts
+	//load scripts
 	wp_enqueue_script('jquery');
 	wp_enqueue_script('kpswishlist-js');
 	global $post;
-	wp_localize_script('kpswishlist-js', 'MyAjax', array(
+	wp_localize_script('kpswishlist-js', 'addToWishlist', array(
 		'action' => 'kps_add_wishlist',
 		'postId' => $post->ID
 		));
+	wp_localize_script('kpswishlist-js', 'removeFromWishlist', array(
+		'action' => 'kps_remove_wishlist',
+		'postId' => $post->ID
+		));
 }
+
 add_action('wp_ajax_kps_add_wishlist', 'kps_add_wishlist_process');
+add_action('wp_ajax_kps_remove_wishlist', 'kps_remove_wishlist_process');
+
 function kps_add_wishlist_process() {
 	$post_id = (int)$_POST['postId'];
 	$user = wp_get_current_user();
 	if(!is_already_wishlisted($post_id)) {
 		add_user_meta($user->ID, 'wanted_post', $post_id);
 	}
-    // generate the response
+	// generate the response
 	$response = json_encode(array('success' => true));
-    // response output
+	// response output
 	header("Content-Type: application/json");
 	echo $response;
 	exit();
 }
+
+function kps_remove_wishlist_process() {
+	$post_id = (int)$_POST['postId'];
+	$user = wp_get_current_user();
+	if(is_already_wishlisted($post_id)) {
+		delete_user_meta( $user->ID, 'wanted_post', $post_id );
+	}
+	$response = json_encode(array('success' => true));
+	header("Content-Type: application/json");
+	echo $response;
+	exit();
+}
+
 //dashboard widget
 add_action('wp_dashboard_setup','kps_create_dashboard_widget');
 function kps_create_dashboard_widget() {
@@ -157,18 +181,22 @@ function kps_create_dashboard_widget() {
 function kps_show_dashboard_widget () {
 	$user = wp_get_current_user();
 	$values = get_user_meta($user->ID, 'wanted_post');
-	
-	$limit =  (int)get_option('kps_number_of_items') ? (int)get_option('kps_number_of_items') : 10;
-	echo '<ul>';
-	foreach ($values as $i => $value) {
-        // check limit
-		if($i == $limit) {
-			break;
+	$limit = (int)get_option('kps_number_of_items') ? (int)get_option('kps_number_of_items') : 10;
+	$number = count($values);
+	if($number > 0){
+		echo '<ul>';
+		foreach ($values as $i => $value) {
+		// check limit
+			if($i == $limit) {
+				break;
+			}
+		//retrieve from db
+			$currentPost = get_post($value);
+		//show post name
+			echo '<li><a href="'.get_post_permalink($currentPost->ID).'">'.$currentPost->post_title.'</a></li>';
 		}
-        //retrieve from db
-		$currentPost = get_post($value);
-        //show post name
-		echo '<li>' . $currentPost->post_title . '</li>';
+		echo '</ul>';
+	}else{
+		echo 'There\'s nothing here yet';
 	}
-	echo '</ul>';
 }
