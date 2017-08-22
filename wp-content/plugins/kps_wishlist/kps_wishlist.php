@@ -64,7 +64,7 @@ function kps_widget_wishlist_init () {
 	register_widget(wishlist_Widget);
 }
 class wishlist_Widget extends WP_Widget {
-	function wishlist_Widget() {
+	function __construct() {
 		$widget_options = array(
             'classname' => 'kps_class', //for CSS
             'description' => 'Add items to wishlist'
@@ -134,7 +134,12 @@ function kps_init() {
 		'postId' => $post->ID
 		));
 }
+
+// add to wishlist Ajax if user is logged in
 add_action('wp_ajax_kps_add_wishlist', 'kps_add_wishlist_process');
+// if not logged in use this:
+// add_action( 'wp_ajax_nopriv_myajax-submit', 'myajax_submit' );
+
 function kps_add_wishlist_process() {
 	$post_id = (int)$_POST['postId'];
 	$user = wp_get_current_user();
@@ -157,7 +162,7 @@ function kps_create_dashboard_widget() {
 function kps_show_dashboard_widget () {
 	$user = wp_get_current_user();
 	$values = get_user_meta($user->ID, 'wanted_post');
-	
+
 	$limit =  (int)get_option('kps_number_of_items') ? (int)get_option('kps_number_of_items') : 10;
 	echo '<ul>';
 	foreach ($values as $i => $value) {

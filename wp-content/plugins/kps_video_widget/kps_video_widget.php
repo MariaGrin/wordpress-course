@@ -65,7 +65,7 @@ add_action('widgets_init', 'kps_widget_init');
 
 
 function kps_widget_init() {
-    register_widget(kps_Widget);
+    register_widget('kps_Widget');
 }
 
 
@@ -75,7 +75,7 @@ function kps_widget_init() {
 class kps_Widget extends WP_Widget {
 
     // инициируем виджет
-    function kps_Widget() {
+    function __construct() {
         $widget_options = array(
             'classname' => 'kps_class', //CSS
             'description' => 'Show a YouTube Video from post metadata'

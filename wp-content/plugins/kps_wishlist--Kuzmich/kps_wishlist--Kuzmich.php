@@ -30,7 +30,7 @@ function kps_plugin_options () {
 		<form action="options.php" method="post">
 			<?php settings_fields('kps-group'); ?>
 			<?php //do_settings_fields('kps-group'); ?>
-			<?php 
+			<?php
 			add_settings_section( 'kps-group', 'Joinform configuration', null, 'section_options_page_type' );
 			?>
 
@@ -67,7 +67,7 @@ function kps_widget_wishlist_init () {
 	register_widget(wishlist_Widget);
 }
 class wishlist_Widget extends WP_Widget {
-	function wishlist_Widget() {
+	function __construct() {
 		$widget_options = array(
 			'classname' => 'kps_class', //for CSS
 			'description' => 'Add items to wishlist'
