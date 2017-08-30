@@ -89,8 +89,13 @@ function my_banner( $content ) {
 add_filter( 'the_content', 'my_banner' );
 */
 
+/*
+add_action('after_setup_theme', 'true_load_theme_textdomain');
 
-
+function true_load_theme_textdomain(){
+    load_theme_textdomain( 'newtheme', get_template_directory() . '/languages' );
+}
+*/
 
 
 

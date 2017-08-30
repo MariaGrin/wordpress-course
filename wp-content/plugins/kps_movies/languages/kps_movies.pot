@@ -1,0 +1,94 @@
+# Copyright (C) 2017 KPS Movies
+# This file is distributed under the same license as the KPS Movies package.
+msgid ""
+msgstr ""
+"Project-Id-Version: KPS Movies 1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/kps_movies\n"
+"POT-Creation-Date: 2017-08-29 16:15:31+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2017-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: kps_movies.php:42
+msgctxt "Post Type General Name"
+msgid "Movies"
+msgstr ""
+
+#: kps_movies.php:43
+msgctxt "Post Type Singular Name"
+msgid "Movie"
+msgstr ""
+
+#: kps_movies.php:44
+msgid "Movies"
+msgstr ""
+
+#: kps_movies.php:45
+msgid "Parent Movie"
+msgstr ""
+
+#: kps_movies.php:46
+msgid "All Movies"
+msgstr ""
+
+#: kps_movies.php:47
+msgid "View Movie"
+msgstr ""
+
+#: kps_movies.php:48
+msgid "Add New Movie"
+msgstr ""
+
+#: kps_movies.php:49
+msgid "Add New"
+msgstr ""
+
+#: kps_movies.php:50
+msgid "Edit Movie"
+msgstr ""
+
+#: kps_movies.php:51
+msgid "Update Movie"
+msgstr ""
+
+#: kps_movies.php:52
+msgid "Search Movie"
+msgstr ""
+
+#: kps_movies.php:53
+msgid "Not Found"
+msgstr ""
+
+#: kps_movies.php:54
+msgid "Not found in Trash"
+msgstr ""
+
+#: kps_movies.php:60
+msgid "movies"
+msgstr ""
+
+#: kps_movies.php:61
+msgid "Movie news and reviews"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "KPS Movies"
+msgstr ""
+
+#. #-#-#-#-#  kps_movies.pot (KPS Movies 1.0)  #-#-#-#-#
+#. Plugin URI of the plugin/theme
+#. #-#-#-#-#  kps_movies.pot (KPS Movies 1.0)  #-#-#-#-#
+#. Author URI of the plugin/theme
+msgid "http://kultprosvet.net"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Learn how to create custom post type."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Klim"
+msgstr ""
